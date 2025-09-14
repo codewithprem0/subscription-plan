@@ -1,152 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Postcode Search - Subscription System</title>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><rect width='64' height='64' fill='white'/><text x='16' y='48' font-size='40' font-family='Arial' fill='black'>P</text></svg>">
-   
-  <title>Subscription - PKR 1,000</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #0f0f0f;
-      color: #e5e5e5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
 
-    h1 {
-      color: #fff;
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 0 8px rgba(255,255,255,0.3);
-    }
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-    .plan-card {
-      background: #1a1a1a;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
-      max-width: 420px;
-      padding: 30px;
-      text-align: center;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #070708, #0c0e12);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    .plan-card h2 {
-      margin: 0;
-      font-size: 1.6rem;
-      color: #00e5ff;
-    }
+        .container {
+            width: 100%;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
 
-    .price {
-      font-size: 2.2rem;
-      font-weight: bold;
-      margin: 20px 0;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(0,229,255,0.6);
-    }
-    .price small {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      display: block;
-    }
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, #00d4ff, #007bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0;
-      color: #cbd5e1;
-    }
-    ul li {
-      margin: 10px 0;
-    }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.8);
+        }
 
-    .btn {
-      display: inline-block;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-weight: bold;
-      text-decoration: none;
-      background: linear-gradient(135deg, #06b6d4, #0ea5a0);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(6,182,212,0.6);
-      transition: 0.3s ease;
-    }
-    .btn:hover {
-      opacity: 0.9;
-    }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
 
-    .details {
-      background: #1f1f1f;
-      margin-top: 30px;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 500px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
-    }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
 
-    .details h3 {
-      color: #00e5ff;
-      margin-top: 0;
-    }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
 
-    .details ol {
-      padding-left: 20px;
-    }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+        }
 
-    .contact p {
-      margin: 6px 0;
-    }
-    .contact a {
-      color: #00e5ff;
-      text-decoration: none;
-    }
-    footer {
-      margin-top: 30px;
-      color: #888;
-      font-size: 0.9rem;
-    }
-  </style>
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+        }
+
+        .feature-desc {
+            opacity: 0.8;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .pricing-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .pricing-header {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+        }
+
+        .price-desc {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .price-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .price-feature {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.8);
+            background: linear-gradient(135deg, #007bff, #00d4ff);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 0 25px rgba(40, 167, 69, 0.8);
+        }
+
+
+
+        .contact-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .contact-title {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            padding: 10px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .contact-item a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-item a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(0, 212, 255, 0.8);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+                margin: 5px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-card {
+                padding: 15px;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .pricing-section {
+                padding: 20px;
+            }
+
+            .price {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animation for loading */
+        .container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.8s ease-out;
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+    </style>
 </head>
+
 <body>
+    <div class="container">
+        <h1>🚀 UK Postcode Lookup System</h1>
+        <p class="subtitle">Professional subscription-based postcode management platform with real-time data</p>
 
-  <h1>Subscription Plan</h1>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <div class="feature-title">Real-time Lookup</div>
+                <div class="feature-desc">Instant postcode search with comprehensive UK location data, addresses, and
+                    geographic coordinates</div>
+            </div>
 
-  <div class="plan-card">
-    <h2>Monthly Access</h2>
-    <div class="price">PKR 1,000 <small>/ month</small></div>
-    <ul>
-      <li>Postcode search access</li>
-      <li>Multi-device usage</li>
-      <li>All routes included</li>
-    </ul>
-    <a href="https://wa.me/923401202005" target="_blank" class="btn">Contact on WhatsApp</a>
-  </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <div class="feature-title">User Management</div>
+                <div class="feature-desc">Advanced session control, user authentication, and subscription-based access
+                    control</div>
+            </div>
 
-  <div class="details">
-    <h3>Registration Process</h3>
-    <ol>
-      <li>Contact admin via WhatsApp: <strong>03401202005</strong></li>
-      <li>Confirm subscription (PKR 1,000)</li>
-      <li>Make payment</li>
-      <li>Receive login credentials</li>
-      <li>Start using the service</li>
-    </ol>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">Admin Dashboard</div>
+                <div class="feature-desc">Complete control over users, subscriptions, real-time monitoring, and system
+                    analytics</div>
+            </div>
 
-    <div class="contact">
-      <h3>Support</h3>
-      <p>📱 WhatsApp: <a href="https://wa.me/923401202005">0340-1202005</a></p>
-      <p>✉️ Email: <a href="mailto:premthakurfact@gmail.com">premthakurfact@gmail.com</a></p>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Secure Access</div>
+                <div class="feature-desc">Enterprise-grade security, encrypted sessions, and Firebase-powered
+                    authentication</div>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <div class="pricing-header">💎 Premium Subscription Plan</div>
+            <div class="price">PKR 1,000<span style="font-size: 1.5rem; opacity: 0.7;">/month</span></div>
+            <div class="price-desc">Full access to all features with monthly subscription</div>
+
+            <div class="price-features">
+                <div class="price-feature">✅ Unlimited Postcode Searches</div>
+                <div class="price-feature">✅ Real-time Data Updates</div>
+                <div class="price-feature">✅ Advanced Filtering Options</div>
+                <div class="price-feature">✅ Export & Download Features</div>
+                <div class="price-feature">✅ Priority Customer Support</div>
+                <div class="price-feature">✅ Mobile Responsive Access</div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="https://post-code-checker.blogspot.com/" class="btn btn-primary">🔐 Login to System</a>
+            <a href="https://wa.me/923401202005" class="btn btn-secondary" target="_blank">💳
+                Subscribe Now</a>
+        </div>
+
+        <div class="contact-section">
+            <h3 class="contact-title">📞 Support & Contact Information</h3>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>📱 WhatsApp Support</strong><br>
+                    <a href="https://wa.me/923401202005" target="_blank">03401202005</a>
+                </div>
+                <div class="contact-item">
+                    <strong>📧 Email Support</strong><br>
+                    <a href="mailto:premthakurfact@gmail.com">premthakurfact@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <strong>🕒 Support Hours</strong><br>
+                    24/7 Available
+                </div>
+                <div class="contact-item">
+                    <strong>⚡ Response Time</strong><br>
+                    Within 2-4 Hours
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 Postcode Checker. All Rights Reserved.</p>
-  </footer>
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add click effect to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
 
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Show toast notification on page load
+            if (typeof Toastify !== 'undefined') {
+                setTimeout(() => {
+                    Toastify({
+                        text: "🚀 Welcome to UK Postcode Lookup System!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(135deg, #00d4ff, #007bff)",
+                        stopOnFocus: true
+                    }).showToast();
+                }, 1000);
+            }
+        });
+    </script>
 </body>
-</html>
 
+</html>
